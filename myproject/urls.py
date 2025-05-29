@@ -23,7 +23,7 @@ urlpatterns = [
     path('', TemplateView.as_view(template_name='index.html'), name='home'),
     path('about/', TemplateView.as_view(template_name='about.html'), name='about'),
     path('contact/', TemplateView.as_view(template_name='contact.html'), name='contact'),
-    path('courses/', TemplateView.as_view(template_name='course.html'), name='courses'),
+    path('course/', TemplateView.as_view(template_name='course.html'), name='courses'),
     path('team/', TemplateView.as_view(template_name='team.html'), name='team'),
     path('testimonials/', TemplateView.as_view(template_name='testimonial.html'), name='testimonials'),
     path('api/courses/', CourseListAPIView.as_view(), name='course-list'),
