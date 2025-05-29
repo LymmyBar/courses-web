@@ -19,10 +19,11 @@ import environ
 load_dotenv()
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
-#BASE_DIR = Path(__file__).resolve().parent.parent
-BASE_DIR = os.path.dirname(os.path.dirname(os.path.abspath(__file__)))
+BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_DIR = BASE_DIR / 'myproject'
 
-
+print("BASE_DIR:", BASE_DIR)
+print("PROJECT_DIR:", PROJECT_DIR)
 
 
 
@@ -67,7 +68,7 @@ ROOT_URLCONF = 'myproject.urls'
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [os.path.join(BASE_DIR, 'templates')],  # Шлях до папки templates
+        'DIRS': [PROJECT_DIR / 'templates'],  # Шлях до папки templates
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -140,8 +141,10 @@ USE_TZ = True
 
 STATIC_URL = '/static/'
 STATICFILES_DIRS = [
-    os.path.join(BASE_DIR, 'static'),
+    PROJECT_DIR / 'static',  # Шлях до папки static
 ]
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
