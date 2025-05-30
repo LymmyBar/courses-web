@@ -3,6 +3,12 @@ import environ
 
 # Створення базового шляху
 BASE_DIR = Path(__file__).resolve().parent.parent
+PROJECT_DIR = BASE_DIR / 'myproject'
+
+print("BASE_DIR:", BASE_DIR)
+print("PROJECT_DIR:", PROJECT_DIR)
+
+
 
 # Ініціалізація environ
 env = environ.Env(DEBUG=(bool, False))
@@ -28,6 +34,14 @@ INSTALLED_APPS = [
     "django.contrib.staticfiles",
     "courses",
     "rest_framework",
+    'django.contrib.admin',
+    'django.contrib.auth',
+    'django.contrib.contenttypes',
+    'django.contrib.sessions',
+    'django.contrib.messages',
+    'django.contrib.staticfiles',
+    'rest_framework',
+
 ]
 
 # Middleware
@@ -55,6 +69,15 @@ TEMPLATES = [
                 "django.template.context_processors.request",
                 "django.contrib.auth.context_processors.auth",
                 "django.contrib.messages.context_processors.messages",
+        'BACKEND': 'django.template.backends.django.DjangoTemplates',
+        'DIRS': [PROJECT_DIR / 'templates'],  # Шлях до папки templates
+        'APP_DIRS': True,
+        'OPTIONS': {
+            'context_processors': [
+                'django.template.context_processors.debug',
+                'django.template.context_processors.request',
+                'django.contrib.auth.context_processors.auth',
+                'django.contrib.messages.context_processors.messages',
             ],
         },
     },
@@ -88,3 +111,18 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 # PK за замовчуванням
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+# Static files (CSS, JavaScript, Images)
+# https://docs.djangoproject.com/en/5.2/howto/static-files/
+
+STATIC_URL = '/static/'
+STATICFILES_DIRS = [
+    PROJECT_DIR / 'static',  # Шлях до папки static
+]
+
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Default primary key field type
+# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
+
+DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
