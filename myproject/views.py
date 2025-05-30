@@ -2,6 +2,7 @@ from rest_framework.views import APIView
 from rest_framework.response import Response
 from django.shortcuts import render
 from .models import Course
+from django.shortcuts import render
 
 def home(request):
     return render(request, 'index.html')
@@ -14,14 +15,13 @@ def contact(request):
 
 def courses(request):
     # Тут можна буде підключити Course.objects.all()
-    courses = Course.objects.all()
     courses_list = []
-    return render(request, 'course.html', {'myproject': courses_list})
+    return render(request, 'course.html', {'courses': courses_list})
 
 def course_detail(request, course_id=None):
     # Приклад з course_id
     course = {}  # get_object_or_404(Course, id=course_id) — у майбутньому
-    return render(request, 'detail.html', {'myproject': course})
+    return render(request, 'detail.html', {'course': course})
 
 def team(request):
     return render(request, 'team.html')
