@@ -1,40 +1,34 @@
 from rest_framework.views import APIView
 from rest_framework.response import Response
-
-from django.shortcuts import render, get_object_or_404
+from django.shortcuts import render
 
 def home(request):
-    # Логіка для головної сторінки
-    return render(request, 'index.html', {})
+    return render(request, 'index.html')
 
 def about(request):
-    # Логіка для сторінки "Про нас"
-    return render(request, 'about.html', {})
+    return render(request, 'about.html')
 
 def contact(request):
-    # Логіка для сторінки контактів
-    return render(request, 'contact.html', {})
+    return render(request, 'contact.html')
 
 def courses(request):
-    # Логіка для відображення списку курсів
-    # Припустімо, у вас є модель Course
-    # courses_list = Course.objects.all()
-    courses_list = []  # замініть на реальні дані
+    # Тут можна буде підключити Course.objects.all()
+    courses_list = []
     return render(request, 'course.html', {'courses': courses_list})
 
-def course_detail(request, course_id):
-    # Логіка для відображення деталей конкретного курсу
-    # course = get_object_or_404(Course, id=course_id)
-    course = {}  # замініть на реальні дані
+def course_detail(request, course_id=None):
+    # Приклад з course_id
+    course = {}  # get_object_or_404(Course, id=course_id) — у майбутньому
     return render(request, 'detail.html', {'course': course})
 
 def team(request):
-    # Логіка для сторінки команди
-    return render(request, 'team.html', {})
+    return render(request, 'team.html')
 
 def testimonials(request):
-    # Логіка для сторінки відгуків
-    return render(request, 'testimonial.html', {})
+    return render(request, 'testimonial.html')
+
+def feature(request):
+    return render(request, 'feature.html')
 
 class CourseListAPIView(APIView):
     def get(self, request):

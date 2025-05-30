@@ -1,25 +1,15 @@
 from pathlib import Path
 import environ
 
-# Створення базового шляху
+# Базова директорія
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_DIR = BASE_DIR / 'myproject'
 
-print("BASE_DIR:", BASE_DIR)
-print("PROJECT_DIR:", PROJECT_DIR)
-
-
-
-# Ініціалізація environ
+# Зчитування змінних з .env
 env = environ.Env(DEBUG=(bool, False))
-environ.Env.read_env(BASE_DIR / ".env")  # явно вказати шлях до .env
+environ.Env.read_env(BASE_DIR / ".env")
 
-# Перевірка на консоль
-print("DEBUG FROM ENV:", env("DEBUG", default=None))
-print("SECRET_KEY FROM ENV:", env("SECRET_KEY", default=None))
-print("DATABASE_URL FROM ENV:", env("DATABASE_URL", default=None))
-
-# Основні налаштування
+# Базові параметри
 SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
@@ -32,16 +22,8 @@ INSTALLED_APPS = [
     "django.contrib.sessions",
     "django.contrib.messages",
     "django.contrib.staticfiles",
-    "courses",
     "rest_framework",
-    'django.contrib.admin',
-    'django.contrib.auth',
-    'django.contrib.contenttypes',
-    'django.contrib.sessions',
-    'django.contrib.messages',
-    'django.contrib.staticfiles',
-    'rest_framework',
-
+    "courses",
 ]
 
 # Middleware
@@ -55,22 +37,14 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
+# Основна конфігурація
 ROOT_URLCONF = "myproject.urls"
 
 # Шаблони
 TEMPLATES = [
     {
-        "BACKEND": "django.template.backends.django.DjangoTemplates",
-        "DIRS": [],
-        "APP_DIRS": True,
-        "OPTIONS": {
-            "context_processors": [
-                "django.template.context_processors.debug",
-                "django.template.context_processors.request",
-                "django.contrib.auth.context_processors.auth",
-                "django.contrib.messages.context_processors.messages",
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
-        'DIRS': [PROJECT_DIR / 'templates'],  # Шлях до папки templates
+        'DIRS': [PROJECT_DIR / 'templates'],
         'APP_DIRS': True,
         'OPTIONS': {
             'context_processors': [
@@ -104,25 +78,16 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# Статика
+# Статичні файли
 STATIC_URL = "/static/"
+STATICFILES_DIRS = [
+    PROJECT_DIR / 'static',
+]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Медійні файли
 MEDIA_URL = "/media/"
 MEDIA_ROOT = BASE_DIR / "media"
 
-# PK за замовчуванням
+# Тип PK за замовчуванням
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-# Static files (CSS, JavaScript, Images)
-# https://docs.djangoproject.com/en/5.2/howto/static-files/
-
-STATIC_URL = '/static/'
-STATICFILES_DIRS = [
-    PROJECT_DIR / 'static',  # Шлях до папки static
-]
-
-STATIC_ROOT = BASE_DIR / 'staticfiles'
-
-# Default primary key field type
-# https://docs.djangoproject.com/en/5.2/ref/settings/#default-auto-field
-
-DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
