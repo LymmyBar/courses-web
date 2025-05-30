@@ -22,5 +22,5 @@ urlpatterns = [
     path('api/courses/<int:pk>/enroll/', views.CourseListAPIView.as_view(), name='course-enroll'),
 
     # URL-и з app `courses`
-    path('courses/', include('courses.urls')),
+    #path('courses/', include('courses.urls')),
 ]
