@@ -23,7 +23,7 @@ jobs:
         run: docker-compose up -d --build
 
       - name: Run tests in container
-        run: docker-compose exec -T web python manage.py test
+        run: docker-compose exec -T web python manage.py test courses --keepdb
 
       - name: Show logs if tests failed
         if: failure()
