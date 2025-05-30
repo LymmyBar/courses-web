@@ -10,9 +10,10 @@ urlpatterns = [
     path('about/', views.about, name='about'),
     path('contact/', views.contact, name='contact'),
     path('course/', views.courses, name='courses'),
+    
     path('feature/', views.feature, name='feature'),
-    path('detail/', views.course_detail, name='course_detail'),
-    path('course/<int:course_id>/', views.course_detail, name='course_detail_with_id'),
+    #path('detail/', views.course_detail, name='course_detail'),
+    path('course/<int:course_id>/', views.course_detail, name='course_detail'),
     path('team/', views.team, name='team'),
     path('testimonial/', views.testimonials, name='testimonials'),
 
