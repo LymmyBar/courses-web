@@ -1,31 +1,34 @@
-name: Docker Build and Test
+name: Docker Compose Build and Test
 
 on:
   push:
-    branches: '**' 
+    branches: [ '**' ]
   pull_request:
-    branches: '**'
+    branches: [ '**' ]
 
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
 
     steps:
-      - name: Checkout repository
+      - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Set up Docker Buildx
-        uses: docker/setup-buildx-action@v3
+      - name: Set up Docker Compose
+        run: |
+          sudo apt-get update
+          sudo apt-get install -y docker-compose
 
-      - name: Build Docker image
-        run: docker build -t myapp:test .
+      - name: Build and start services
+        run: docker-compose up -d --build
 
-      - name: Run container (detached)
-        run: docker run -d --rm --name myapp_container myapp:test
+      - name: Run tests in container
+        run: docker-compose exec -T web python manage.py test
 
-      - name: Run tests inside container
-        run: docker exec myapp_container python manage.py test
+      - name: Show logs if tests failed
+        if: failure()
+        run: docker-compose logs
 
-      - name: Stop container
+      - name: Stop services
         if: always()
-        run: docker stop myapp_container
+        run: docker-compose down
