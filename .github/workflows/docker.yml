@@ -5,11 +5,10 @@ on:
     branches: [ '**' ]
   pull_request:
     branches: [ '**' ]
-
+    
 jobs:
   build-and-test:
     runs-on: ubuntu-latest
-
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
@@ -25,13 +24,12 @@ jobs:
       - name: Build and start services
         run: docker-compose up -d --build
 
-      - name: Run tests in container
-        run: docker-compose exec -T web python manage.py test courses --keepdb
+      - name: Show running containers
+        run: docker ps -a
 
-      - name: Show logs if tests failed
+      - name: Show web service logs if failed
         if: failure()
-        run: docker-compose logs
+        run: docker-compose logs web
 
-      - name: Stop services
-        if: always()
-        run: docker-compose down
+      - name: Run tests
+        run: docker-compose exec -T web python manage.py test courses --keepdb
