@@ -18,6 +18,11 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y docker-compose
 
+      - name: Set up .env file
+        run: |
+          echo "${{secrets.DOCKER_ENV}}" >> .env
+          
+
       - name: Build and start services
         run: docker-compose up --build -d
 
