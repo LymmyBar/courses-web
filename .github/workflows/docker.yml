@@ -18,11 +18,19 @@ jobs:
           sudo apt-get update
           sudo apt-get install -y docker-compose
 
-      - name: Copy .env.example to .env
-        run: cp .env.example .env
-
       - name: Build and start services
-        run: docker-compose up -d --build
+        run: docker-compose up --build -d
+
+      - name: Wait for container to be ready
+        run: |
+          for i in {1..10}; do
+          if [ "$(docker inspect -f '{{.State.Running}}' <container_name>)" == "true" ]; then
+            echo "Container is running!"
+          break
+          fi
+            echo "Waiting for container..."
+            sleep 5
+          done
 
       - name: Show running containers
         run: docker ps -a
