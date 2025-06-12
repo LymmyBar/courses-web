@@ -12,7 +12,7 @@ environ.Env.read_env(BASE_DIR / ".env")
 # Базові параметри
 SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
-ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
+ALLOWED_HOSTS = ['my-courses-web-app-36e4e58c0534.herokuapp.com']
 
 # Додатки
 INSTALLED_APPS = [
