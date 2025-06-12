@@ -1,15 +1,16 @@
 from pathlib import Path
 import environ
+import os
 
-# Базова директорія
+# Шлях до базової директорії проєкту
 BASE_DIR = Path(__file__).resolve().parent.parent
 PROJECT_DIR = BASE_DIR / 'myproject'
 
-# Зчитування змінних з .env
+# Завантаження .env
 env = environ.Env(DEBUG=(bool, False))
-environ.Env.read_env(BASE_DIR / ".env")
+environ.Env.read_env(BASE_DIR / ".env")  # або просто .env, якщо в корені
 
-# Базові параметри
+# Безпека
 SECRET_KEY = env("SECRET_KEY")
 DEBUG = env("DEBUG")
 ALLOWED_HOSTS = env.list("ALLOWED_HOSTS", default=[])
@@ -26,9 +27,9 @@ INSTALLED_APPS = [
     "courses",
 ]
 
-# Middleware
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
+    "whitenoise.middleware.WhiteNoiseMiddleware",  # ← Для обслуговування статики
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -37,10 +38,8 @@ MIDDLEWARE = [
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
 
-# Основна конфігурація
 ROOT_URLCONF = "myproject.urls"
 
-# Шаблони
 TEMPLATES = [
     {
         'BACKEND': 'django.template.backends.django.DjangoTemplates',
@@ -78,12 +77,16 @@ TIME_ZONE = "UTC"
 USE_I18N = True
 USE_TZ = True
 
-# Статичні файли
+# Статика
 STATIC_URL = "/static/"
+STATIC_ROOT = BASE_DIR / "staticfiles"  # ← Heroku збирає сюди
+
 STATICFILES_DIRS = [
-    PROJECT_DIR / 'static',
+    PROJECT_DIR / "static",  # твоя папка зі стилями тощо
 ]
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+
+# Потрібно для whitenoise (обслуговує статику без NGINX)
+STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
 
 # Медійні файли
 MEDIA_URL = "/media/"
@@ -91,5 +94,3 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 # Тип PK за замовчуванням
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
-
-#DJANGO_SETTINGS_MODULE = "myproject.settings"

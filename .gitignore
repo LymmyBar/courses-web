@@ -11,6 +11,10 @@ venv/
 ENV/
 .venv/
 *venv/
+/staticfiles/
+staticfiles/
+.staticfiles/
+*staticfiles/
 
 # Django
 db.sqlite3
