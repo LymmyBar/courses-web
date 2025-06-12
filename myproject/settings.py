@@ -86,7 +86,7 @@ STATICFILES_DIRS = [
 ]
 
 # Потрібно для whitenoise (обслуговує статику без NGINX)
-STATICFILES_STORAGE = "whitenoise.storage.CompressedManifestStaticFilesStorage"
+STATICFILES_STORAGE = 'django.contrib.staticfiles.storage.StaticFilesStorage'
 
 # Медійні файли
 MEDIA_URL = "/media/"
