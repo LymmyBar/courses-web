@@ -56,12 +56,6 @@ jobs:
           chmod 600 ~/.netrc
           heroku auth:whoami
 
-      - name: Add or update Heroku remote
-        run: |
-          git remote remove heroku || true
-          git remote add heroku https://git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
-
       - name: Push to Heroku
         run: |
           git push https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git HEAD:main --force
-    
