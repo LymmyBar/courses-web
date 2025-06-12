@@ -12,6 +12,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # Робимо повний клон, щоб уникнути shallow clone
 
       - name: Set up Docker Compose
         run: |
@@ -41,6 +43,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v4
+        with:
+          fetch-depth: 0   # Важливо: повний клон для деплою
 
       - name: Install Heroku CLI
         run: |
