@@ -1,4 +1,4 @@
-name: Docker Compose Build and Test
+name: Docker Compose Build and Deploy
 
 on:
   push:
@@ -42,15 +42,21 @@ jobs:
       - name: Checkout code
         uses: actions/checkout@v4
 
-      - name: Log in to Heroku
-        uses: akhileshns/heroku-deploy@v3.13.15
-        with:
-          heroku_api_key: ${{ secrets.HEROKU_API_KEY }}
-          heroku_app_name: ${{ secrets.HEROKU_APP_NAME }}
-          heroku_email: ${{ secrets.HEROKU_EMAIL }}
-          usedocker: false
+      - name: Install Heroku CLI
+        run: |
+          curl https://cli-assets.heroku.com/install.sh | sh
 
-      - name: Deploy to Heroku
+      - name: Log in to Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
+        run: |
+          echo "machine api.heroku.com\n  login ${{ secrets.HEROKU_EMAIL }}\n  password $HEROKU_API_KEY" > ~/.netrc
+          echo "machine git.heroku.com\n  login ${{ secrets.HEROKU_EMAIL }}\n  password $HEROKU_API_KEY" >> ~/.netrc
+          heroku auth:whoami
+
+      - name: Push to Heroku
+        env:
+          HEROKU_API_KEY: ${{ secrets.HEROKU_API_KEY }}
         run: |
           git remote add heroku https://heroku:${{ secrets.HEROKU_API_KEY }}@git.heroku.com/${{ secrets.HEROKU_APP_NAME }}.git
           git push heroku HEAD:main --force
