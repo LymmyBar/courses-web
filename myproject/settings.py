@@ -91,3 +91,5 @@ MEDIA_ROOT = BASE_DIR / "media"
 
 # Тип PK за замовчуванням
 DEFAULT_AUTO_FIELD = "django.db.models.BigAutoField"
+
+#DJANGO_SETTINGS_MODULE = "myproject.settings"

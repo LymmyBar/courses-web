@@ -36,7 +36,7 @@ class CourseViewTests(TestCase):
         self.assertEqual(Course.objects.count(), course_count + 1)
 
     def test_course_list_view(self):
-        url = reverse('courses')  # Ім'я url має відповідати вашому urls.py
+        url = reverse('courses')  
         response = self.client.get(url)
         self.assertEqual(response.status_code, 200)
         self.assertTemplateUsed(response, 'course.html')
